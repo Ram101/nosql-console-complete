@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html xmlns:p="http://primefaces.org/ui"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core">
+
+<f:view>
+	<h:head>
+		<link type="text/css" rel="stylesheet" href="./css/index.css" />
+		<h1>
+			<h:outputText value="No SQL"
+				style="text-align:center;font-size:1.7em;color:BLACK ;font-family:impact;margin-left:600px" />
+		</h1>
+<!-- <p:progressBar id="progressBarClient" widgetVar="pbClient" style="width:1500px"/> -->
+	</h:head>
+	<h:body style="background-image: url('backG.jpg')">
+	<p:growl id="growl" showDetail="true"  />  
+			<p:button id="start" outcome="Charts" value="Bench Mark Charts"
+				icon="ui-icon-circle"
+				style="text-align:center;margin-left:10px;font-size:1.2em;color:white;font-family:Arial;size:400px;"  
+				onclick="start()" widgetVar="startButton1"/>
+				
+		<p:button outcome="livegraph" value="Device Performance liveFeed "
+				icon="ui-icon-bin"
+				style="text-align:center;margin-left:10px;font-size:1.2em;color:white;font-family:Arial;size:400px;"  />
+		
+	
+		<p:dock position="top" proximity="0" maxWidth="270" itemWidth="270"
+			style="font-family:imapct;color:black;">
+			<p:menuitem value="Cassandra" icon="cassandra.png"
+				url="cassandra.xhtml"
+				style="font-family:arial;color:black;font-size:20px;" />
+			<p:menuitem value="Mongo" icon="mongodb.png" url="MongoDB.xhtml"
+				style="font-family:arial;color:black;font-size:20px;" />
+			<p:menuitem value="Redis" icon="redis.png" url="Redis.xhtml"
+				style="font-family:arial;color:black;font-size:20px;" />
+		</p:dock>
+	</h:body>
+<!-- 	<style style="text/css">
+    .animated .ui-progressbar-value { 
+        background-image: url("/showcase/javax.faces.resource/demo/images/pbar-ani.gif.xhtml"); 
+    }
+</style> -->
+ 
+<script type="text/javascript">
+function start() {
+    PF('startButton1').disable();
+ 
+    window['progress'] = setInterval(function() {
+        var pbClient = PF('pbClient'),
+        oldValue = pbClient.getValue(),
+        newValue = oldValue + 10;
+ 
+        pbClient.setValue(pbClient.getValue() + 10);
+ 
+        if(newValue === 100) {
+            clearInterval(window['progress']);
+        }
+ 
+ 
+    }, 1000);
+}
+ 
+function cancel() {
+    clearInterval(window['progress']);
+    PF('pbClient').setValue(0);
+    PF('startButton1').enable();
+}
+</script>
+</f:view>
+</html>

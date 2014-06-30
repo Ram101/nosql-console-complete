@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html xmlns:p="http://primefaces.org/ui"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core">
+
+<f:view>
+	<h:head>
+		<link type="text/css" rel="stylesheet" href="./css/index.css" />
+		<h1>
+			<h:outputText value="NoSQL"
+				style="text-align:center;font-size:1em;color:BLACK ;font-family:impact;margin-left:650px" />
+		</h1>
+	</h:head>
+	<h:body style="background-image: url('backG.jpg')">
+		<h:form id="idForm">
+			<p:panel
+				header="Dynamic Database BenchMarking for Reading 10k records" />
+
+			<p:chart type="bar" model="#{charts.animatedModel}" id="idChart"
+				style="width:400px;" rendered="#{charts.renderChart}" />
+
+			<p:progressBar ajax="true" value="#{charts.progress}" labelTemplate="{value}%" global="false"
+				widgetVar="pbar" />
+
+			<p:commandButton value="Start Bench Marking" onclick="PF('pbar').start();"
+				action="#{charts.startBenchMark}" process="@this" update="@form" />
+
+			<p:button outcome="index" value="Back" icon="ui-icon-star" />
+		</h:form>
+	</h:body>
+</f:view>
+</html>

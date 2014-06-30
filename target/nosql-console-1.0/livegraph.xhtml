@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html xmlns:p="http://primefaces.org/ui"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core">
+
+<f:view>
+	<h:head>
+		<link type="text/css" rel="stylesheet" href="./css/live.css" />
+	</h:head>
+	<h:body style="background-image: url('backG.jpg')">
+		<h:form id="idForm">
+			<p:layout>
+				<p:layoutUnit position="center" header="Live Feed from Device">
+					<p:panelGrid columns="2" id="chartPanel">
+						<p:panel header="Free Ram Statistics (in MBs)">
+							<p:lineChart xaxisLabel="last 10 samples" yaxisLabel="Free Ram"
+								value="#{chartController.linearModelRam}" legendPosition="nw"
+								style="height:400px;width: 700px;" />
+						</p:panel>
+						<p:panel header="Battery Usage Statistics (Percentage Remaining)">
+							<p:lineChart xaxisLabel="last 10 samples"
+								yaxisLabel="Battery Percentage"
+								value="#{chartController.linearModelBat}" legendPosition="nw"
+								style="height:400px;width: 700px;" />
+						</p:panel>
+					</p:panelGrid>
+					<p:button outcome="index" value="Back" icon="ui-icon-star" />
+					<p:poll interval="2" update="idForm:chartPanel" autoStart="true" />
+				</p:layoutUnit>
+			</p:layout>
+		</h:form>
+	</h:body>
+</f:view>
+</html>

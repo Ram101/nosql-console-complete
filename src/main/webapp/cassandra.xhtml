@@ -1,0 +1,71 @@
+<html xmlns:p="http://primefaces.org/ui"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core">
+
+<f:view>
+	<h:head>
+		<link type="text/css" rel="stylesheet" href="./css/default.css" />
+		<h1>
+			<h:outputText value="Cassandra Database" style="text-align:center;margin-left:500px;font-family:impact;" />
+		</h1>
+		<p:button outcome="index" value="Back" icon="ui-icon-star"/>
+	</h:head>
+	<h:body style="background-image: url('backG.jpg');">
+	 	 <p:growl id="msgs" showDetail="true"/>
+		<h:form>
+			
+			<p:dataTable var="casstab" value="#{cassView.lazyModel}"
+				paginator="true" rows="50"
+				paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}"
+				rowsPerPageTemplate="50,100,150" selectionMode="single"
+				selection="#{cassView.selectedDevice}" id="deviceTable"
+				lazy="true" editable="true">
+			 	  <p:ajax event="rowSelect" listener="#{cassView.onRowSelect}" 
+					update=":j_idt8:DeviceDetail"
+					oncomplete="PF('deviceDialog').show()" /> 
+           
+				<p:column headerText="UdId" 
+					filterBy="#{casstab.udid}">
+					<h:outputText value="#{casstab.udid}" />
+				</p:column>
+				<p:column headerText="FriendlyName" 
+					>
+					<h:outputText value="#{casstab.friendlyname}" />
+				</p:column>
+				<p:column headerText="Serialnumber" 
+					>
+					<h:outputText value="#{casstab.serialnum}" />
+				</p:column>
+				<p:column headerText="Manufacture Date" 
+					>
+					<h:outputText value="#{casstab.manidate}" />
+				</p:column>
+				
+					
+			</p:dataTable>
+			<p:dialog header="Device Detail" widgetVar="deviceDialog"
+				modal="true" showEffect="explode" hideEffect="explode" resizable="false" position="600,350">
+				
+				<p:outputPanel id="DeviceDetail" style="text-align:center;">
+					
+					<p:panelGrid columns="2"
+						rendered="#{not empty cassView.selectedDevice}"
+						columnClasses="label,value">
+						<h:outputText value="UdId:" />
+						<h:inputText value="#{cassView.selectedDevice.udid}" />
+						<h:outputText value="FreindlyName" />
+						<h:inputText value="#{cassView.selectedDevice.friendlyname}" />
+						<h:outputText value="SerialNumber:" />
+						<h:inputText value="#{cassView.selectedDevice.serialnum}" />
+						<h:outputText value="ManufactureDate" />
+						<h:inputText value="#{cassView.selectedDevice.manidate}"/>
+						 <h:commandButton value="Update" id="edit"  actionListener="#{cassView.onRowEdit}" styleClass="ui-priority-primary"  update=":form:msgs"/>
+                         <h:commandButton value="Delete" id="delete"  actionListener="#{cassView.onDelete}" styleClass="ui-priority-primary"  update=":form:msgs"/>
+                           <h:commandButton value="Insert" id="insert"  actionListener="#{cassView.onCreate}" styleClass="ui-priority-primary"  update=":form:msgs"/>						
+						</p:panelGrid>
+				</p:outputPanel>
+			</p:dialog>
+		</h:form>
+	</h:body>
+</f:view>
+</html>
